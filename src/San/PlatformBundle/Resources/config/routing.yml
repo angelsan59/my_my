@@ -1,0 +1,7 @@
+san_platform_homepage:
+    path:     /
+    defaults: { _controller: SanPlatformBundle:Default:index }
+    
+hello_the_world:
+    path: /hello-world
+    defaults: { _controller: SanPlatformBundle:Advert:index }

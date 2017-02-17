@@ -1,0 +1,7 @@
+san_platform:
+    resource: "@SanPlatformBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
