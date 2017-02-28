@@ -1,0 +1,8 @@
+san_core_homepage:
+    path:     /
+    defaults: { _controller: SanCoreBundle:Core:index }
+
+san_core_contact:
+    path: /contact
+    defaults:
+        _controller: SanCoreBundle:Core:contact

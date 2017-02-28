@@ -1,4 +1,7 @@
 services:
-#    san_platform.example:
-#        class: San\PlatformBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    san_platform.antispam:
+        class: San\PlatformBundle\Antispam\SanAntispam
+        arguments:
+            - "@mailer"
+            - %locale%
+            - 50

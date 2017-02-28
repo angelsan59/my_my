@@ -1,7 +1,43 @@
-san_platform_homepage:
-    path:     /
-    defaults: { _controller: SanPlatformBundle:Default:index }
+
+san_platform_home:
+    path: /{page}
+    defaults:
+        _controller: SanPlatformBundle:Advert:index
+        page: 1
+    requirements:
+        page: \d*
     
-hello_the_world:
-    path: /hello-world
-    defaults: { _controller: SanPlatformBundle:Advert:index }
+san_platform_view:
+    path: /advert/{id}
+    defaults:
+        _controller: SanPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+    
+san_platform_view_slug:
+    path: /{year}/{slug}.{format}
+    defaults: 
+        _controller: SanPlatformBundle:Advert:viewSlug
+        format: html
+    requirements:
+        year: \d{4}
+        format: html|xml
+    
+san_platform_add:
+    path: /add
+    defaults:
+        _controller: SanPlatformBundle:Advert:add
+    
+san_platform_edit:
+    path: /edit/{id}
+    defaults:
+        _controller: SanPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+        
+san_platform_delete:
+    path: /delete/{id}
+    defaults:
+        _controller: SanPlatformBundle:Advert:delete
+    requirements:
+        id: \d+

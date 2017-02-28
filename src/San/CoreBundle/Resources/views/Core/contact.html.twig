@@ -1,0 +1,16 @@
+{# src/OC/PlatformBundle/Resources/view/Advert/view.html.twig #}
+{% extends "SanCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+ <h2>Page de contact</h2>
+    <div class="alert alert-info">
+      {# On affiche tous les messages flash dont le nom est « info » #}
+      {% for message in app.session.flashbag.get('info') %}
+        <p>Message flash : {{ message }}</p>
+      {% endfor %}
+    </div>
+{% endblock %}
