@@ -2,6 +2,7 @@
 
 namespace San\PlatformBundle\Controller;
 
+use San\PlatformBundle\Entity\Advert;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,14 +46,16 @@ class AdvertController extends Controller
     
     public function viewAction($id){
         
-        $advert = array(
-      'title'   => 'Recherche développpeur Symfony2',
-      'id'      => $id,
-      'author'  => 'Alexandre',
-      'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
-      'date'    => new \Datetime()
-    );
-
+     $repository = $this->getDoctrine()
+             ->getManager()
+             ->getRepository('SanPlatformBundle:Advert')
+     ;
+     
+     $advert = $repository->find($id);
+     
+     if (null === $advert){
+         throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+     }
     return $this->render('SanPlatformBundle:Advert:view.html.twig', array(
       'advert' => $advert
     ));
@@ -66,18 +69,25 @@ class AdvertController extends Controller
          $antispam = $this->container->get('san_platform.antispam');
 
     // Je pars du principe que $text contient le texte d'un message quelconque
-    $text = '...';
-    if ($antispam->isSpam($text)) {
-      throw new \Exception('Votre message a été détecté comme spam !');
-    }
-     
+   // $text = '...';
+  //  if ($antispam->isSpam($text)) {
+  //    throw new \Exception('Votre message a été détecté comme spam !');
+   // }
+         $advert = new Advert();
+         $advert->setTitle('Recherche développeur symfony');
+         $advert->setAuthor('Alexandre');
+         $advert->setContent("Nous recherchons un développeur débutant sur Lyon");
+         
+         $em = $this->getDoctrine()->getmanager();
+         $em->persist($advert);
+         $em->flush();
         
         if ($request->isMethod('POST')){
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistree');
             
-            return $this->redirectToRoute('san_platform_view', array('id' => 5));
+            return $this->redirectToRoute('san_platform_view', array('id' => $advert->getId()));
         }
-        return $this->render('SanPlatformBundle:Advert:add.html.twig');
+        return $this->render('SanPlatformBundle:Advert:add.html.twig', array('advert' => $advert));
     }
     
     public function editAction($id, Request $request){

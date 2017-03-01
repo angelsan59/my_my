@@ -7,7 +7,9 @@
 {% block sanplatform_body %}
 
   <h2>Ajouter une annonce</h2>
-
+{% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">Message flash : {{ message }}</div>
+      {% endfor %}
   {{ include("SanPlatformBundle:Advert:form.html.twig") }}
 
   
